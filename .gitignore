@@ -1,0 +1,6 @@
+SMT/.vscode/*
+SMT/SMT
+SMT/*.o
+SMT/Makefile
+SMT/.qmake.stash
+SMT/SMT.pro.user
