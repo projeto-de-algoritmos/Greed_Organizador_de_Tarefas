@@ -7,6 +7,8 @@
 #include <QListWidget>
 #include <vector>
 #include <QLabel>
+#include <QLineEdit>
+#include <QCalendarWidget>
 
 class window : public QWidget {
 
@@ -20,11 +22,19 @@ private:
     QLabel *tarefa_label;
     QLabel *data_label;
     QDate data_inicio = QDate::currentDate();
+    QLineEdit *campo_texto1;
+    QLineEdit *campo_texto2;
+    QCalendarWidget *calendar;
+    QLabel *alert;
+    int atraso_maximo = 0;
+    int qtd_atrasos = 0;
+    int achado = -1;
 
-private slots:
+public slots:
     void tela_adicionar_tarefa();
     void adicionar_tarefa();
     void tela_editar_tarefa();
+    void coletar_dados();
     void editar_tarefa();
     void tela_remover_tarefa();
     void remover_tarefa();
@@ -35,6 +45,9 @@ private slots:
     void mostrar_detalhes_calendario();
     void tela_atualizar_data_inicio();
     void atualizar_data_inicio();
+    void atualizar_lista(QDate);
+    void validar_busca_tarefa();
+    void tela_informacoes();
 };
 
 #endif // WINDOW_H

@@ -1,45 +1,72 @@
-**!! Atenção: Renomeie o seu repositório para (Tema)_(NomeDoProjeto). !!** 
+# Organizador de Tarefas
 
-Temas:
- - Grafos1
- - Grafos2
- - PD
- - D&C
- - Greed
- - Final 
- 
- **!! *Não coloque os nomes dos alunos no título do repositório*. Exemplo de título correto: Grafos2_Labirinto-do-Minotauro !!**
- 
- (Apague essa seção)
-
-# NomedoProjeto
-
-**Número da Lista**: X<br>
-**Conteúdo da Disciplina**: XXXXXXXXXX<br>
+**Número da Lista**: 3<br>
+**Conteúdo da Disciplina**: Programação Dinâmica<br>
 
 ## Alunos
 |Matrícula | Aluno |
 | -- | -- |
-| xx/xxxxxx  |  xxxx xxxx xxxxx |
-| xx/xxxxxx  |  xxxx xxxx xxxxx |
+| 17/0050394  |  Henrique Martins de Messias |
 
 ## Sobre 
-Descreva os objetivos do seu projeto e como ele funciona. 
+O software deste repositório é um <b>Organizador de Tarefas</b>.
 
 ## Screenshots
-Adicione 3 ou mais screenshots do projeto em funcionamento.
+![tela inicial](img/inicial.png)
+
+![adicionar tarefa](img/adicionar.png)
+
+![detalhes da tarefa](img/detalhes.png)
 
 ## Instalação 
-**Linguagem**: xxxxxx<br>
-**Framework**: (caso exista)<br>
-Descreva os pré-requisitos para rodar o seu projeto e os comandos necessários.
+**Linguagem**: C++<br>
+Seu dispositivo deve ter o Qt5 instalado. Para fazer isso, utilize os seguintes comandos:
 
-## Uso 
-Explique como usar seu projeto caso haja algum passo a passo após o comando de execução.
+```bash
+    $ sudo apt-get install build-essential
+    $ sudo apt-get install qt5-default
+```
 
-## Outros 
-Quaisquer outras informações sobre seu projeto podem ser descritas abaixo.
+## Uso
 
+No terminal, vá até o diretório do exercício, que contém, além de arquivos como o README, a pasta "SMT".
 
+Digite o seguinte comando:
 
+  ```bash
+    $ cd SMT
+    $ qmake
+  ```
 
+Para compilar o código, digite:
+
+  ```bash
+    $ make
+  ```
+
+Para executar o código, digite:
+
+  ```bash
+    $ ./SMT
+  ```
+
+## Outros
+
+Cada tarefa possui os seguintes dados:
+ - Nome
+ - Tempo (tempo, em dias, necessário para completar a tarefa)
+ - Deadline (data de entrega)
+ - Inicio (data em que a pessoa vai iniciar a tarefa)
+ - Termino (data em que a pessoa vai terminar a tarefa)
+
+O software armazena as tarefas em um vetor, atualizando conforme o usuário adiciona, edita, remove e completa tarefas.
+
+ O usuário possui as seguintes opções:
+  - Adicionar Tarefa (o usuário insere o nome, o tempo e a data de entrega da tarefa)
+  - Editar Tarefa (o usuário insere o nome da tarefa e, então, coloca as novas informações)
+  - Remover Tarefa (o usuário insere o nome da tarefa e o sistema a remove)
+  - Completar Tarefa (o sistema remove a primeira tarefa)
+  - Detalhes de uma Tarefa (o usuário insere o nome da tarefa e o sistema informará os dados dela)
+  - Detalhes do Calendário (o sistema informará alguns dados do calendário, como quantidade de tarefas e atrasos)
+  - Atualizar data de Início (a data de início é sempre a data de hoje, mas o usuário pode alterá-la)
+  - Outras Informações (informações sobre o programa)
