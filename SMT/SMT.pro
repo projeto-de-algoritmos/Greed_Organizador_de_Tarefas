@@ -8,8 +8,10 @@ CONFIG += c++17
 
 SOURCES += \
         main.cpp \
-        window.cpp
+        window.cpp \
+    dados.cpp
 
 HEADERS += \
         window.h \
-    job.h
+    job.h \
+    dados.h

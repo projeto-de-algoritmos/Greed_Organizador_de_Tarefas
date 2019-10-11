@@ -4,6 +4,7 @@
 #include <QPushButton>
 #include <QEventLoop>
 #include <QMessageBox>
+#include <random>
 
 window::window(QWidget *parent) : QWidget(parent) {
     int button_width = 420, button_height = 80;
@@ -95,11 +96,11 @@ window::window(QWidget *parent) : QWidget(parent) {
     connect(update_date, &QPushButton::clicked, this, &window::tela_atualizar_data_inicio);
     detalhes_layout->addWidget(update_date, 3, 0);
 
-    QPushButton *other = new QPushButton("Outras Informações", this);
+    QPushButton *other = new QPushButton("Calendário Aleatório", this);
     other->setFixedWidth(button_width);
     other->setFixedHeight(button_height);
     other->setFont(buttonFont);
-    connect(other, &QPushButton::clicked, this, &window::tela_informacoes);
+    connect(other, &QPushButton::clicked, this, &window::tela_aleatorio);
     detalhes_layout->addWidget(other, 4, 0);
 
     /**************** Finalizações ****************/
@@ -762,62 +763,89 @@ void window::validar_busca_tarefa() {
     }
 }
 
-void window::tela_informacoes() {
-    const string objetivo1 { "O objetivo é minimizar o maior atraso do calendário, organizando as tarefas" };
-    const string objetivo2 { "pela sua data de entrega, além de calcular as datas de início das tarefas." };
-    const string informacao1 { "Diferenças entre remover uma tarefa e completá-la:" };
-    const string informacao2 { "Ao remover uma tarefa, o cálculo de término e atraso é refeito." };
-    const string informacao3 { "Ao completar uma tarefa, ela é apenas removida da lista." };
-
+void window::tela_aleatorio() {
     new_window = new QWidget(nullptr);
-    new_window->setFixedSize(900, 300);
-    new_window->setWindowTitle("Outras Informações");
+    new_window->setFixedSize(500, 300);
+    new_window->setWindowTitle("Calendário Aleatório");
 
+    QFont buttonFont("Times", 20);
     QFont labelFont("Times", 20, QFont::Bold);
+    QFont campoFont("Times", 20);
+    int button_size = 480;
     int maximum_label_height = 30;
+
+    campo_texto1 = new QLineEdit();
+    campo_texto1->setFont(campoFont);
+    campo_texto1->setValidator(new QIntValidator());
 
     QVBoxLayout *tela = new QVBoxLayout();
 
-    QLabel *label1 = new QLabel(QString::fromStdString(objetivo1));
-    label1->setAlignment(Qt::AlignCenter);
-    label1->setMaximumHeight(maximum_label_height);
-    label1->setFont(labelFont);
+    QLabel *label = new QLabel("Insira a quantidade de Tarefas");
+    label->setAlignment(Qt::AlignCenter);
+    label->setMaximumHeight(maximum_label_height);
+    label->setFont(labelFont);
 
-    QLabel *label2 = new QLabel(QString::fromStdString(objetivo2));
-    label2->setAlignment(Qt::AlignCenter);
-    label2->setMaximumHeight(maximum_label_height);
-    label2->setFont(labelFont);
+    QPushButton *button = new QPushButton("Enviar");
+    button->setFixedWidth(button_size);
+    button->setFont(buttonFont);
+    connect(button, &QPushButton::clicked, this, &window::calendario_aleatorio);
 
-    QLabel *label3 = new QLabel(QString::fromStdString(informacao1));
-    label3->setAlignment(Qt::AlignCenter);
-    label3->setMaximumHeight(maximum_label_height);
-    label3->setFont(labelFont);
+    alert = new QLabel("");
+    alert->setAlignment(Qt::AlignCenter);
+    alert->setMaximumHeight(15);
 
-    QLabel *label4 = new QLabel(QString::fromStdString(informacao2));
-    label4->setAlignment(Qt::AlignCenter);
-    label4->setMaximumHeight(maximum_label_height);
-    label4->setFont(labelFont);
+    progressBar = new QProgressBar();
+    progressBar->setFixedHeight(40);
 
-    QLabel *label5 = new QLabel(QString::fromStdString(informacao3));
-    label5->setAlignment(Qt::AlignCenter);
-    label5->setMaximumHeight(maximum_label_height);
-    label5->setFont(labelFont);
-
-    QLabel *espaco = new QLabel(" ");
-    espaco->setAlignment(Qt::AlignCenter);
-    espaco->setMaximumHeight(maximum_label_height);
-    espaco->setFont(labelFont);
-
-    tela->addWidget(label1);
-    tela->addWidget(label2);
-    tela->addWidget(espaco);
-    tela->addWidget(label3);
-    tela->addWidget(label4);
-    tela->addWidget(label5);
+    tela->addWidget(label);
+    tela->addWidget(campo_texto1);
+    tela->addWidget(button);
+    tela->addWidget(progressBar);
+    tela->addWidget(alert);
     new_window->setLayout(tela);
     new_window->show();
 
     QEventLoop loop;
     connect(this, SIGNAL(destroyed()), & loop, SLOT(quit()));
     loop.exec();
+}
+
+void window::calendario_aleatorio() {
+    int qtd = campo_texto1->text().toInt();
+    if(qtd < 1) {
+        alert->setText("Numero deve ser 1 ou maior");
+        return;
+    }
+
+    random_device rd;
+    mt19937_64 mt(rd());
+
+    uniform_int_distribution<int> dist_verbos(0, N_VERBOS-1);
+    uniform_int_distribution<int> dist_nomes(0, N_NOMES-1);
+    uniform_int_distribution<int> dist_locais(0, N_LOCAIS-1);
+    uniform_int_distribution<int> dist_tempos(1, 5);
+
+    jobs.clear();
+    jobs.reserve(qtd);
+
+    progressBar->setMinimum(0);
+    progressBar->setMaximum(qtd);
+    progressBar->setValue(0);
+
+    int um_perc = qtd/100 ? qtd/100 : 1;
+
+    alert->setText("Criando Tarefas");
+    QDate temp = data_inicio;
+
+    for(int i = qtd; i--; ) {
+        temp = temp.addDays(dist_tempos(mt));
+        jobs.emplace_back(verbos[dist_verbos(mt)] + " " + nomes[dist_nomes(mt)] + " " + locais[dist_locais(mt)],
+                          dist_tempos(mt),
+                          temp);
+        if(!((qtd-i)%um_perc)) progressBar->setValue(qtd-i);
+    }
+
+    this->atualizar_lista(data_inicio);
+
+    new_window->close();
 }

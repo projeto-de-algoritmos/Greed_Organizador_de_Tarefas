@@ -2,6 +2,7 @@
 #define WINDOW_H
 
 #include "job.h"
+#include "dados.h"
 
 #include <QWidget>
 #include <QListWidget>
@@ -9,6 +10,7 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QCalendarWidget>
+#include <QProgressBar>
 
 class window : public QWidget {
 
@@ -18,7 +20,6 @@ public:
 private:
     QWidget *new_window;
     QListWidget *lista;
-    vector<Job> jobs;
     QLabel *tarefa_label;
     QLabel *data_label;
     QDate data_inicio = QDate::currentDate();
@@ -26,6 +27,9 @@ private:
     QLineEdit *campo_texto2;
     QCalendarWidget *calendar;
     QLabel *alert;
+    QProgressBar *progressBar;
+
+    vector<Job> jobs;
     int atraso_maximo = 0;
     int qtd_atrasos = 0;
     int achado = -1;
@@ -47,7 +51,8 @@ public slots:
     void atualizar_data_inicio();
     void atualizar_lista(QDate);
     void validar_busca_tarefa();
-    void tela_informacoes();
+    void tela_aleatorio();
+    void calendario_aleatorio();
 };
 
 #endif // WINDOW_H
