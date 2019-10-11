@@ -69,4 +69,4 @@ O software armazena as tarefas em um vetor, atualizando conforme o usuário adic
   - Detalhes de uma Tarefa (o usuário insere o nome da tarefa e o sistema informará os dados dela)
   - Detalhes do Calendário (o sistema informará alguns dados do calendário, como quantidade de tarefas e atrasos)
   - Atualizar data de Início (a data de início é sempre a data de hoje, mas o usuário pode alterá-la)
-  - Outras Informações (informações sobre o programa)
+  - Calendáiro Aleatório (o usuário insere uma quantidade de tarefas e o programa gera aleatoriamente)
