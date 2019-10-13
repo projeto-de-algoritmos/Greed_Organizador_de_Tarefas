@@ -18,7 +18,12 @@ const vector<string> verbos = {
     "Preparar",
     "Finalizar",
     "Marcar",
-    "Limpar"
+    "Limpar",
+    "Construir",
+    "Sacar",
+    "Distribuir",
+    "Ajudar",
+    "Organizar"
 };
 
 const vector<string> nomes = {
@@ -39,7 +44,12 @@ const vector<string> nomes = {
     "reunião",
     "reserva",
     "sujeira",
-    "lixo"
+    "lixo",
+    "salário",
+    "pagamento",
+    "mesada",
+    "aula",
+    "apresentação"
 };
 
 const vector<string> locais {
@@ -55,12 +65,29 @@ const vector<string> locais {
     "do quarto",
     "do emprego",
     "dos alunos",
+    "dos estudantes",
+    "dos professores",
+    "do diretor",
     "dos funcionários",
     "dos empregados",
     "dos dados",
     "do auditório",
     "da piscina",
-    "do quintal"
+    "do quintal",
+    "do patrão",
+    "do chefe",
+    "do filho",
+    "da filha",
+    "do pai",
+    "da mãe",
+    "do tio",
+    "da tia",
+    "da mesa",
+    "do computador",
+    "da cadeira",
+    "da máquina",
+    "do celular",
+    "do telefone"
 };
 
 const int N_VERBOS = verbos.size();
